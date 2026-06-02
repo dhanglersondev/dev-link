@@ -23,7 +23,7 @@ export function Input({
         rounded-md
         bg-gray-200
         px-4
-        py-3
+        py-2
         text-gray-700
         outline-none
         transition-all
