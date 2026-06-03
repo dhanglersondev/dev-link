@@ -96,19 +96,19 @@ export function Home() {
         {socialLinks && Object.keys(socialLinks).length > 0 && (
           <footer className="flex justify-center gap-3 my-4">
             <Social url={socialLinks.facebook}>
-              <FaFacebook size={24} color="#fff" />
+              <FaFacebook size={44} color="#2A27F5" />
             </Social>
 
             <Social url={socialLinks.instagram}>
-              <FaInstagram size={24} color="#fff" />
+              <FaInstagram size={44} color="#F52761" />
             </Social>
 
             <Social url={socialLinks.linkedin}>
-              <FaLinkedin size={24} color="#fff" />
+              <FaLinkedin size={44} color="#2776F5" />
             </Social>
 
             <Social url={socialLinks.github}>
-              <FaGithub size={24} color="#fff" />
+              <FaGithub size={44} color="#000000" />
             </Social>
           </footer>
         )}

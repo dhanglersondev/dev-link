@@ -9,7 +9,6 @@ export function Networks() {
   const [instagram, setInstagram] = useState("");
   const [linkedin, setLinkedin] = useState("");
   const [github, setGithub] = useState("");
-  const [youtube, setYoutube] = useState("");
 
   useEffect(() => {
     async function loadLinks() {
@@ -24,7 +23,6 @@ export function Networks() {
         setInstagram(data.instagram ?? "");
         setLinkedin(data.linkedin ?? "");
         setGithub(data.github ?? "");
-        setYoutube(data.youtube ?? "");
       } catch (error) {
         console.error("Erro ao carregar links:", error);
       }
@@ -41,7 +39,6 @@ export function Networks() {
       instagram: instagram,
       linkedin: linkedin,
       github: github,
-      youtube: youtube,
     })
       .then(() => {
         console.log("Cadastrados com Sucesso")
@@ -98,16 +95,6 @@ export function Networks() {
           placeholder="Digite a URL do GitHub..."
           value={github}
           onChange={(e) => setGithub(e.target.value)}
-        />
-
-        <label className="text-white text-2xl mt-4 mb-2">
-          YouTube
-        </label>
-        <Input
-          type="url"
-          placeholder="Digite a URL do GitHub..."
-          value={youtube}
-          onChange={(e) => setYoutube(e.target.value)}
         />
 
         <button

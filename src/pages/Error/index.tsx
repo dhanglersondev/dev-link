@@ -3,7 +3,7 @@ export function NotFound() {
     <div className="min-h-screen flex items-center justify-center px-4">
       <main className="w-full max-w-lg text-center">
         <div className="w-full rounded-md bg-linear-to-r from-blue-1200 to-indigo-900 px-8 py-10 text-gray-200 shadow-lg">
-          <h1 className="text-7xl font-extrabold text-purple-600">
+          <h1 className="text-7xl font-extrabold text-purple-400">
             404
           </h1>
 
@@ -11,7 +11,7 @@ export function NotFound() {
             Página não encontrada
           </h2>
 
-          <p className="mt-3 text-gray-500">
+          <p className="mt-3 text-gray-200">
             A página que você tentou acessar não existe ou foi removida.
           </p>
 

@@ -86,7 +86,7 @@ export function Admin() {
   }
 
   return (
-    <div className="flex items-center flex-col mt-12 mb-3 px-3 min-h-screen pb-7">
+    <div className="flex items-center flex-col min-h-screen pb-7 px-2">
       <Header />
 
       <form className="flex flex-col mt-12 mb-3 px-3 w-full max-w-xl" onSubmit={handleRegister}>
