@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { FiTrash } from "react-icons/fi";
@@ -6,7 +6,20 @@ import { db } from "../../services/firebaseConnection";
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
 } from "firebase/firestore";
+
+interface LinkProps {
+  id: string,
+  titulo: string,
+  url: string,
+  bg: string,
+  color: string
+}
 
 export function Admin() {
   const [titulo, setTitulo] = useState("");
@@ -14,11 +27,38 @@ export function Admin() {
   const [colorInput, setColorInput] = useState("#ec069b");
   const [bgColorInput, setBgColorInput] = useState("#0c0c0c");
 
-  function handleRegister(event: FormEvent) {
+  const [links, setLinks] = useState<LinkProps[]>([]);
 
+  useEffect(() => {
+    const linksRef = collection(db, "links");
+    const queryRef = query(linksRef, orderBy("created", "asc"));
+
+    const unsub = onSnapshot(queryRef, (snapshot) => {
+      const lista = [] as LinkProps[];
+
+      snapshot.forEach((doc) => {
+        lista.push({
+          id: doc.id,
+          titulo: doc.data().titulo,
+          url: doc.data().url,
+          bg: doc.data().bg,
+          color: doc.data().color
+        })
+      })
+
+      setLinks(lista)
+    })
+
+    return () => {
+      unsub();
+    }
+
+  }, [])
+
+  function handleRegister(event: FormEvent) {
     event.preventDefault();
 
-    if(titulo === "" || url === "") {
+    if (titulo === "" || url === "") {
       alert("Preencha todos os campos")
       return;
     }
@@ -30,14 +70,19 @@ export function Admin() {
       color: colorInput,
       created: new Date()
     })
-    .then(() => {
-      setTitulo("")
-      setUrl("")
-      console.log("CADASTRADO COM SUCESSO!")
-    })
-    .catch((error) => {
-      console.log("ERRO AO CADASTRAR NO BANCO" + error)
-    })
+      .then(() => {
+        setTitulo("")
+        setUrl("")
+        console.log("CADASTRADO COM SUCESSO!")
+      })
+      .catch((error) => {
+        console.log("ERRO AO CADASTRAR NO BANCO" + error)
+      })
+  }
+
+  async function handleRemoveLink(id: string) {
+    const docRef = doc(db, "links", id)
+    await deleteDoc(docRef)
   }
 
   return (
@@ -148,16 +193,19 @@ export function Admin() {
           Meus Links
         </h2>
 
-        <article
-          className="flex items-center justify-between w-full rounded-md px-4 py-3"
-          style={{ backgroundColor: "#FFF", color: "#000" }}
-        >
-          <p style={{ fontSize: 14, fontWeight: "bold" }}>Canal do YouTube</p>
+        {links.map((link) => (
+          <article
+            key={link.id}
+            className="flex items-center justify-between w-full rounded-sm px-4 py-3 mt-2"
+            style={{ backgroundColor: link.bg, color: link.color }}
+          >
+            <p style={{ fontSize: 14, fontWeight: "bold" }}>{link.titulo}</p>
 
-          <button type="button">
-            <FiTrash size={18} color="#000" />
-          </button>
-        </article>
+            <button onClick={ () => handleRemoveLink(link.id)}>
+              <FiTrash style={{color: link.color, fontSize: "20px" }} />
+            </button>
+          </article>
+        ))}
       </div>
     </div>
   );
