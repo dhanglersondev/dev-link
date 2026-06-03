@@ -1,73 +1,86 @@
-# React + TypeScript + Vite
+# Dev Link
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação front-end desenvolvida com React, TypeScript, Vite e Tailwind CSS para gerenciar links e páginas protegidas usando autenticação Firebase.
 
-Currently, two official plugins are available:
+## Descrição
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Este projeto é uma interface moderna para cadastro e acesso de links, com rotas públicas e privadas. O usuário pode acessar páginas públicas como Home e Login, e páginas privadas como Admin e Social somente após autenticação.
 
-## React Compiler
+## Tecnologias
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router DOM
+- Firebase Authentication
+- Firebase Firestore
+- React Icons
+- ESLint
 
-## Expanding the ESLint configuration
+## Funcionalidades
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Roteamento com `react-router-dom`
+- Rotas públicas: `/` e `/login`
+- Rotas privadas protegidas: `/admin` e `/admin/social`
+- Autenticação Firebase com monitoramento de estado do usuário
+- Configuração de Firebase em `src/services/firebaseConnection.ts`
+- Redirecionamento automático para `/login` quando usuário não autenticado
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Estrutura principal
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- `src/App.tsx` - configuração do roteador do aplicativo
+- `src/main.tsx` - ponto de entrada do React
+- `src/routes/PrivateRoutes.tsx` - validação de rotas privadas
+- `src/services/firebaseConnection.ts` - inicialização do Firebase
+- `src/pages/` - páginas do aplicativo
+- `src/components/` - componentes reutilizáveis
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Como rodar
+
+1. Instale as dependências:
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Inicie o servidor de desenvolvimento:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+3. Abra o endereço exibido no terminal (normalmente `http://localhost:5173`).
+
+## Build
+
+Para gerar a versão de produção:
+
+```bash
+npm run build
+```
+
+Para visualizar o build localmente:
+
+```bash
+npm run preview
+```
+
+## Observações
+
+- A aplicação carrega as credenciais do Firebase de variáveis de ambiente.
+- Crie um arquivo `.env` com as chaves abaixo ou copie `.env.example`.
+- Não versionize o `.env`; ele já está incluído em `.gitignore`.
+
+```bash
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
+```
+
+## Licença
+
+Este projeto está disponível sob a licença do autor.
