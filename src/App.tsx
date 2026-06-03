@@ -21,7 +21,7 @@ const router = createBrowserRouter([
     element: <PrivateRoutes><Admin /></PrivateRoutes>
   },
   {
-    path: "/networks",
+    path: "/admin/social",
     element: <PrivateRoutes><Networks /></PrivateRoutes>
   },
   {

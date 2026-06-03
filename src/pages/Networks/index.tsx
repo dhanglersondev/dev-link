@@ -1,8 +1,8 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { db } from "../../services/firebaseConnection";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export function Networks() {
   const [facebook, setFacebook] = useState("");
@@ -10,6 +10,28 @@ export function Networks() {
   const [linkedin, setLinkedin] = useState("");
   const [github, setGithub] = useState("");
   const [youtube, setYoutube] = useState("");
+
+  useEffect(() => {
+    async function loadLinks() {
+      try {
+        const snapshot = await getDoc(doc(db, "social", "link"));
+
+        if (!snapshot.exists()) return;
+
+        const data = snapshot.data();
+
+        setFacebook(data.facebook ?? "");
+        setInstagram(data.instagram ?? "");
+        setLinkedin(data.linkedin ?? "");
+        setGithub(data.github ?? "");
+        setYoutube(data.youtube ?? "");
+      } catch (error) {
+        console.error("Erro ao carregar links:", error);
+      }
+    }
+
+    loadLinks();
+  }, []);
 
   function handleRegister(e: FormEvent) {
     e.preventDefault();
@@ -21,12 +43,12 @@ export function Networks() {
       github: github,
       youtube: youtube,
     })
-    .then(() => {
-      console.log("Cadastrados com Sucesso")
-    })
-    .catch((error) => {
-      console.log("Erro ao tentar salvar" + error)
-    })
+      .then(() => {
+        console.log("Cadastrados com Sucesso")
+      })
+      .catch((error) => {
+        console.log("Erro ao tentar salvar" + error)
+      })
   }
 
   return (
