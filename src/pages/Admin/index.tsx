@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import { FiTrash } from "react-icons/fi";
+import { db } from "../../services/firebaseConnection";
+import {
+  addDoc,
+  collection,
+} from "firebase/firestore";
 
 export function Admin() {
   const [titulo, setTitulo] = useState("");
@@ -9,11 +14,37 @@ export function Admin() {
   const [colorInput, setColorInput] = useState("#ec069b");
   const [bgColorInput, setBgColorInput] = useState("#0c0c0c");
 
+  function handleRegister(event: FormEvent) {
+
+    event.preventDefault();
+
+    if(titulo === "" || url === "") {
+      alert("Preencha todos os campos")
+      return;
+    }
+
+    addDoc(collection(db, "links"), {
+      titulo: titulo,
+      url: url,
+      bg: bgColorInput,
+      color: colorInput,
+      created: new Date()
+    })
+    .then(() => {
+      setTitulo("")
+      setUrl("")
+      console.log("CADASTRADO COM SUCESSO!")
+    })
+    .catch((error) => {
+      console.log("ERRO AO CADASTRAR NO BANCO" + error)
+    })
+  }
+
   return (
     <div className="flex items-center flex-col min-h-screen pb-7 px-2">
       <Header />
 
-      <form className="flex flex-col mt-12 mb-3 px-3 w-full max-w-xl">
+      <form className="flex flex-col mt-12 mb-3 px-3 w-full max-w-xl" onSubmit={handleRegister}>
         <label className="text-white font-medium">
           Título do link
         </label>
@@ -99,7 +130,7 @@ export function Admin() {
             rounded-md
             bg-purple-500
             px-4
-            py-2.5
+            py-2
             font-semibold
             text-white
             transition-colors
