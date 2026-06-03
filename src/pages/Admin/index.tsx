@@ -86,11 +86,11 @@ export function Admin() {
   }
 
   return (
-    <div className="flex items-center flex-col min-h-screen pb-7 px-2">
+    <div className="flex items-center flex-col mt-12 mb-3 px-3 min-h-screen pb-7">
       <Header />
 
       <form className="flex flex-col mt-12 mb-3 px-3 w-full max-w-xl" onSubmit={handleRegister}>
-        <label className="text-white font-medium">
+        <label className="text-white text-2xl mt-2 mb-2">
           Título do link
         </label>
 
@@ -100,8 +100,8 @@ export function Admin() {
           onChange={(e) => setTitulo(e.target.value)}
         />
 
-        <label className="text-white font-medium mt-4">
-          Link URL
+        <label className="text-white text-2xl mt-3 mb-2">
+          Link url
         </label>
 
         <Input
@@ -189,7 +189,7 @@ export function Admin() {
       </form>
 
       <div className="w-full max-w-xl px-3 flex flex-col items-center">
-        <h2 className="font-medium text-white mb-2 text-2xl">
+        <h2 className="font-medium text-white mb-2 text-3xl">
           Meus Links
         </h2>
 
@@ -199,10 +199,10 @@ export function Admin() {
             className="flex items-center justify-between w-full rounded-sm px-4 py-3 mt-2"
             style={{ backgroundColor: link.bg, color: link.color }}
           >
-            <p style={{ fontSize: 14, fontWeight: "bold" }}>{link.titulo}</p>
+            <p style={{ fontSize: 17, fontWeight: "bold" }}>{link.titulo}</p>
 
             <button onClick={ () => handleRemoveLink(link.id)}>
-              <FiTrash style={{color: link.color, fontSize: "20px" }} />
+              <FiTrash style={{color: link.color, fontSize: "20px", cursor: "pointer" }} />
             </button>
           </article>
         ))}
