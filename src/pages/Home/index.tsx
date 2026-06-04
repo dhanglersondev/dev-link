@@ -30,7 +30,7 @@ export function Home() {
 
       getDocs(queryRef)
         .then((snapshot) => {
-          let lista = [] as LinkProps[];
+          const lista = [] as LinkProps[];
 
           snapshot.forEach((doc) => {
             lista.push({
